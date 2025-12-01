@@ -17,18 +17,21 @@
     <form class="mt-4">
       <div class="mb-3">
         <label class="form-label">Número entero 1</label>
-        <input type="number" class="form-control" required>
+        <input type="number" id="n1" class="form-control" required>
       </div>
 
       <div class="mb-3">
         <label class="form-label">Número entero 2</label>
-        <input type="number" class="form-control" required>
+        <input type="number" id="n2" class="form-control" required>
       </div>
 
-      <button class="btn btn-warning">Calcular</button>
+       <button type="button" class="btn btn-primary" onclick="NumParesYImpares('resultadoNumeros')">RevisarNumeros</button>
     </form>
+     <div class="col-12">
+        <div id="resultadoNumeros" class="alert alert-info d-none" ></div>
+      </div>
   </div>
-
+  <script src="js/solucion.js"></script>
   <script src="js/navbar.js"></script>
 </body>
 </html>

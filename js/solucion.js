@@ -35,12 +35,15 @@ function mostrarResultado(tipo, id, mensaje) {
     function MatrizNxN() {
       const n1 = parseInt(document.getElementById('n1').value, 10);
       const n2 = parseInt(document.getElementById('n2').value, 10);
-       if (isNaN(n1) || isNaN(n2) || n1 <= 0 || n2 <= 0)
+       if (isNaN(n1) || isNaN(n2))
          {
-            mostrarResultado('warning', id, 'Por favor, ingrese valores válidos para filas y columnas.');
+            mostrarResultado('warning', 'Error', 'Por favor, ingrese valores válidos para filas y columnas.');
             return;
          }
-
+         if (n1 <= 0 || n2 <= 0) {
+            mostrarResultado('warning', 'Error', 'Los valores de filas y columnas deben ser mayores que cero.');
+            return;
+         }
 
       const matrix = Array.from({ length: n1 }, () => Array.from({ length: n2 }, () => 0));
 
@@ -49,7 +52,7 @@ function mostrarResultado(tipo, id, mensaje) {
       }
 
       let sum = 0;
-      if (n === 1) {
+      if (n1 === 1 && n2 === 1) {
         const v = randInt(1, 100);
         matrix[0][0] = v;
         sum = v;
@@ -76,7 +79,36 @@ function mostrarResultado(tipo, id, mensaje) {
         html += '</tr>';
       }
       html += '</tbody></table>';
-      out.innerHTML = html;
+        const outputDiv = document.getElementById('matrixOutput');
+        outputDiv.innerHTML = html;
 
-      mostrarResultado('info', sumId, `Suma de esquinas: ${sum}`);
+      mostrarResultado('info', 'matrixSum', `Suma de esquinas: ${sum}`);
     }
+
+function NumParesYImpares(outputId = 'resultadoNumeros') {
+  const n1 = document.getElementById('n1').value;
+  const n2 = document.getElementById('n2').value;
+
+  if (isNaN(n1) || isNaN(n2) || n1 === '' || n2 === '') {
+    mostrarResultado('warning', outputId, 'Por favor, ingresa ambos números');
+    return;
+  }
+  const digits1 = n1;
+  const digits2 = n2;
+
+  const Pares = [...digits1].every(ch => parseInt(ch, 10) % 2 === 0);
+  const Impares = [...digits2].every(ch => parseInt(ch, 10) % 2 !== 0);
+
+  if (Pares && Impares) {
+    mostrarResultado('info', outputId, 'El primer número contiene solo dígitos pares y el segundo solo dígitos impares.');
+  }
+  if (Pares === false && Impares === true) {
+    mostrarResultado('info', outputId, "El primer número no contiene solo dígitos pares.");
+}
+    if (Impares === false && Pares === true) {
+    mostrarResultado('info', outputId, "El segundo número no contiene solo dígitos impares.");
+  }
+    if (Pares === false && Impares === false) {
+    mostrarResultado('info', outputId, "El primer numero no contiene solo dígitos pares y el segundo número no contiene solo dígitos impares.");
+  }
+}
